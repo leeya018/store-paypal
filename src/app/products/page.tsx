@@ -1,41 +1,13 @@
+"use client";
 import React from "react";
+import Cart from "@/components/Cart";
+import ProductList from "@/components/ProductList";
 
-type Product = {
-  id: string;
-  name: string;
-  image: string;
-  price: number;
-  description: string;
-};
-
-async function fetchProducts(): Promise<Product[]> {
-  // Replace this with your actual data fetching logic
-  return [
-    {
-      id: "1",
-      name: "Bench Grinder",
-      image: "/bench-grinder.png",
-      price: 120,
-      description: "A powerful bench grinder for various grinding tasks.",
-    },
-    {
-      id: "2",
-      name: "Small cover",
-      image: "/small-cover.png",
-      price: 50,
-      description: "A durable cover for small items.",
-    },
-    // Add more products here
-  ];
-}
-
-const ProductsPage = async () => {
-  const products = await fetchProducts();
-
+const ProductsPage = () => {
   return (
     <div>
       <h1 className="text-3xl font-bold text-center my-6">Products</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product) => (
           <div
             key={product.id}
@@ -52,9 +24,11 @@ const ProductsPage = async () => {
             <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
               Add to Cart
             </button>
-          </div>
-        ))}
-      </div>
+          </div> */}
+      {/* ))} */}
+      {/* </div> */}
+      <ProductList />
+      <Cart />
     </div>
   );
 };

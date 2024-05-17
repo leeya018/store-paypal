@@ -1,20 +1,10 @@
 import React from "react";
 import ProductCard from "./ProductCard";
+import { products } from "@/util";
+import { useCart } from "@/context/CartContext";
 
-type Product = {
-  id: string;
-  name: string;
-  image: string;
-  price: number;
-  description: string;
-};
-
-type ProductListProps = {
-  products: Product[];
-  onAddToCart: (product: Product) => void;
-};
-
-const ProductList: React.FC<ProductListProps> = ({ products, onAddToCart }) => {
+const ProductList: React.FC<> = ({}) => {
+  const { addToCart } = useCart();
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.map((product) => (
@@ -24,7 +14,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, onAddToCart }) => {
           image={product.image}
           price={product.price}
           description={product.description}
-          onAddToCart={() => onAddToCart(product)}
+          onAddToCart={() => addToCart(product)}
         />
       ))}
     </div>
