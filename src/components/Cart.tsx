@@ -5,6 +5,12 @@ import { useCart } from "../context/CartContext";
 const Cart: React.FC = () => {
   const { cart, increaseQuantity, decreaseQuantity } = useCart();
 
+  const getTotal = () => {
+    return cart
+      .map((item) => item.product.price * item.quantity)
+      .reduce((acc, value) => acc + value, 0);
+  };
+
   return (
     <div className="p-6 bg-white shadow-md">
       <h2 className="text-2xl font-bold mb-4">Shopping Cart</h2>
@@ -45,6 +51,7 @@ const Cart: React.FC = () => {
           ))}
         </ul>
       )}
+      <div>total: ${getTotal()}</div>
     </div>
   );
 };
