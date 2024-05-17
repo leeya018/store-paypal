@@ -14,10 +14,13 @@ const Cart: React.FC = () => {
   };
 
   const handleCheckout = () => {
-    router.push(
-      "https://meshulam.co.il/purchase?b=2f93c0fc2d45a702e20ed63e2c5e3814"
-    );
+    router.push("checkout ");
   };
+  // const handleCheckout = () => {
+  //   router.push(
+  //     "https://meshulam.co.il/purchase?b=2f93c0fc2d45a702e20ed63e2c5e3814"
+  //   );
+  // };
 
   return (
     <div className="p-6 bg-white shadow-md">
