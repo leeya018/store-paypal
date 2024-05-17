@@ -9,7 +9,7 @@ import { useCart } from "@/context/CartContext";
 const CheckoutPage = () => {
   const { cart } = useCart();
 
-  const initialOptions = {
+  const initialOptions: any = {
     "client-id": process.env.NEXT_PUBLIC_API_KEY,
     currency: "USD",
     intent: "capture",
