@@ -1,14 +1,22 @@
 "use client";
 import React from "react";
 import { useCart } from "../context/CartContext";
+import { useRouter } from "next/navigation";
 
 const Cart: React.FC = () => {
   const { cart, increaseQuantity, decreaseQuantity } = useCart();
+  const router = useRouter();
 
   const getTotal = () => {
     return cart
       .map((item) => item.product.price * item.quantity)
       .reduce((acc, value) => acc + value, 0);
+  };
+
+  const handleCheckout = () => {
+    router.push(
+      "https://meshulam.co.il/purchase?b=2f93c0fc2d45a702e20ed63e2c5e3814"
+    );
   };
 
   return (
@@ -52,6 +60,12 @@ const Cart: React.FC = () => {
         </ul>
       )}
       <div>total: ${getTotal()}</div>
+      <button
+        onClick={handleCheckout}
+        className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+      >
+        Checkout
+      </button>
     </div>
   );
 };
