@@ -1,6 +1,6 @@
 // components/AddProductForm.tsx
 
-import { addProduct } from "@/api/product/add";
+import { addProductApi } from "@/api/product/add";
 import messageStore from "@/mobx/messageStore";
 import { ModalStore } from "@/mobx/modalStore";
 import React, { useState } from "react";
@@ -47,7 +47,7 @@ const AddProductForm: React.FC = () => {
 
     try {
       console.log(product);
-      await addProduct(product);
+      await addProductApi(product);
       messageStore.setMessage("product added!", "success");
     } catch (error) {
       console.log(error);

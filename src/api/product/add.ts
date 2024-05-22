@@ -5,7 +5,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "@/firebaseConfig";
 import { Product } from "@/components/AddProductForm";
 
-export const addProduct = async (product: Product) => {
+export const addProductApi = async (product: Product) => {
   try {
     let imageUrl = "";
 
