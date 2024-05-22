@@ -1,32 +1,40 @@
+// components/Product.tsx
+
+import { Product } from "@/context/CartContext";
 import React from "react";
 
-type ProductCardProps = {
-  name: string;
-  image: string;
-  price: number;
-  description: string;
+interface ProductProps {
+  product: Product;
   onAddToCart: () => void;
-};
+}
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  name,
-  image,
-  price,
-  description,
-  onAddToCart,
-}) => {
+const ProductCard: React.FC<ProductProps> = ({ product, onAddToCart }) => {
+  const { name, imageUrl, price, currency, description } = product;
   return (
-    <div className="border rounded-md p-4 flex flex-col items-center">
-      <img src={image} alt={name} className="w-32 h-32 object-cover mb-4" />
-      <h2 className="text-lg font-bold">{name}</h2>
-      <p className="text-gray-700 mb-2">${price}</p>
-      <p className="text-sm text-gray-600 mb-4">{description}</p>
-      <button
-        onClick={onAddToCart}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md"
-      >
-        Add to Cart
-      </button>
+    <div className="max-w-sm rounded overflow-hidden shadow-lg p-4">
+      <img
+        className="w-32 h-32 object-cover mb-4 mx-auto"
+        src={imageUrl}
+        alt={name}
+      />
+      <div className="px-6 py-4">
+        <div className="font-bold text-xl mb-2">{name}</div>
+        <p className="text-gray-700 text-base">{description}</p>
+      </div>
+      <div className="px-6 pt-4 pb-2">
+        <span className="text-gray-900 font-bold">
+          {currency}
+          {price}
+        </span>
+      </div>{" "}
+      <div className="flex justify-center">
+        <button
+          onClick={onAddToCart}
+          className="bg-blue-500 text-white px-4 py-2 rounded-md "
+        >
+          Add to Cart
+        </button>
+      </div>
     </div>
   );
 };

@@ -35,7 +35,7 @@ const Cart: React.FC = () => {
               className="flex justify-between items-center mb-4"
             >
               <img
-                src={item.product.image}
+                src={item.product.imageUrl}
                 alt={item.product.name}
                 className="w-16 h-16 object-cover mr-4"
               />

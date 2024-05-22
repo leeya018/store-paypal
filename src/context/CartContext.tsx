@@ -1,11 +1,12 @@
 "use client";
 import React, { createContext, useState, useContext, ReactNode } from "react";
 
-type Product = {
+export type Product = {
   id: string;
   name: string;
-  image: string;
+  imageUrl: string;
   price: number;
+  currency: string;
   description: string;
 };
 
