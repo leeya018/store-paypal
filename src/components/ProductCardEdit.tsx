@@ -8,13 +8,12 @@ import React from "react";
 
 interface ProductProps {
   product: Product;
-  onAddToCart: () => void;
+
   onProductRemove: (productId: string) => void;
 }
 
-const ProductCard: React.FC<ProductProps> = ({
+const ProductCardEdit: React.FC<ProductProps> = ({
   product,
-  onAddToCart,
   onProductRemove,
 }) => {
   const { id, name, imageUrl, price, currency, description } = product;
@@ -35,12 +34,6 @@ const ProductCard: React.FC<ProductProps> = ({
   };
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg p-4">
-      <button
-        onClick={() => handleRemove(product)}
-        className="flex items-center bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-      >
-        Delete
-      </button>
       <img
         className="w-32 h-32 object-cover mb-4 mx-auto"
         src={imageUrl}
@@ -55,17 +48,17 @@ const ProductCard: React.FC<ProductProps> = ({
           {currency}
           {price}
         </span>
-      </div>{" "}
-      <div className="flex justify-center">
+      </div>
+      <div className="w-full flex justify-between items-center">
         <button
-          onClick={onAddToCart}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md "
+          onClick={() => handleRemove(product)}
+          className="flex items-center bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
         >
-          Add to Cart
+          Delete
         </button>
       </div>
     </div>
   );
 };
 
-export default ProductCard;
+export default ProductCardEdit;

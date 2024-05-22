@@ -8,8 +8,9 @@ import { Product } from "@/api/product/interfaces";
 import { getProductsApi } from "@/api/product/get";
 import Loading from "./Loading";
 import { removeProductApi } from "@/api/product/remove";
+import ProductCardEdit from "./ProductCardEdit";
 
-const ProductList: React.FC = () => {
+const ProductListEdit: React.FC = () => {
   const { addToCart } = useCart();
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -41,10 +42,9 @@ const ProductList: React.FC = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {products.map((product, index) => (
-        <ProductCard
+        <ProductCardEdit
           key={index}
           product={product}
-          onAddToCart={() => addToCart(product)}
           onProductRemove={handleProductRemove}
         />
       ))}
@@ -52,4 +52,4 @@ const ProductList: React.FC = () => {
   );
 };
 
-export default ProductList;
+export default ProductListEdit;
