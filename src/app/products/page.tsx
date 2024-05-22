@@ -8,10 +8,12 @@ import { ModalStore } from "@/mobx/modalStore";
 import AddProductForm from "@/components/AddProductForm";
 import { modals } from "@/util";
 import AddButton from "@/components/AddButton";
+import Message from "@/components/Message";
 
 const ProductsPage = observer(() => {
   return (
     <div>
+      <Message />
       <Modal
         isOpen={ModalStore.modalName === modals.addProduct}
         closeModal={ModalStore.closeModal}

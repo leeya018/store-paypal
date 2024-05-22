@@ -1,8 +1,11 @@
 // components/AddProductForm.tsx
 
+import { addProduct } from "@/api/product/add";
+import messageStore from "@/mobx/messageStore";
+import { ModalStore } from "@/mobx/modalStore";
 import React, { useState } from "react";
 
-interface Product {
+export interface Product {
   name: string;
   image: File | null;
   price: number;
@@ -39,11 +42,19 @@ const AddProductForm: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission logic here
 
-    console.log(product);
+    try {
+      console.log(product);
+      await addProduct(product);
+      messageStore.setMessage("product added!", "success");
+    } catch (error) {
+      console.log(error);
+      messageStore.setMessage(error.message, "error");
+    } finally {
+      ModalStore.closeModal();
+    }
   };
 
   return (

@@ -1,14 +1,6 @@
 "use client";
+import { Product } from "@/api/product/interfaces";
 import React, { createContext, useState, useContext, ReactNode } from "react";
-
-export type Product = {
-  id: string;
-  name: string;
-  imageUrl: string;
-  price: number;
-  currency: string;
-  description: string;
-};
 
 type CartItem = {
   product: Product;

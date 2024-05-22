@@ -1,4 +1,4 @@
-import { Product } from "./context/CartContext";
+import { Product } from "./api/product/interfaces";
 
 export const products: Product[] = [
   {
@@ -66,10 +66,6 @@ export const products: Product[] = [
     description: "A durable cover for small items.",
   },
 ];
-
-
-
-
 
 export const modals = {
   addProduct: "addProduct",

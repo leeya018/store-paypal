@@ -1,6 +1,6 @@
 // components/Product.tsx
 
-import { Product } from "@/context/CartContext";
+import { Product } from "@/api/product/interfaces";
 import React from "react";
 
 interface ProductProps {
