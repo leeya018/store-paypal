@@ -1,17 +1,11 @@
 // components/AddProductForm.tsx
 
 import { addProductApi } from "@/api/product/add";
+import { Product } from "@/api/product/interfaces";
+import productStore from "@/mobx/ProductStore";
 import messageStore from "@/mobx/messageStore";
 import { ModalStore } from "@/mobx/modalStore";
 import React, { useState } from "react";
-
-export interface Product {
-  name: string;
-  image: File | null;
-  price: number;
-  currency: string;
-  description: string;
-}
 
 const AddProductForm: React.FC = () => {
   const [product, setProduct] = useState<Product>({
@@ -47,7 +41,8 @@ const AddProductForm: React.FC = () => {
 
     try {
       console.log(product);
-      await addProductApi(product);
+      const newProd = await addProductApi(product);
+      productStore.addProduct(newProd);
       messageStore.setMessage("product added!", "success");
     } catch (error) {
       console.log(error);

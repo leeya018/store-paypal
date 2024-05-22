@@ -10,6 +10,8 @@ import { modals } from "@/util";
 import AddButton from "@/components/AddButton";
 import Message from "@/components/Message";
 import ProductListEdit from "@/components/ProductListEdit";
+import EditProductForm from "@/components/EditProductForm";
+import productStore from "@/mobx/ProductStore";
 
 const ProductsPage = observer(() => {
   return (
@@ -21,7 +23,15 @@ const ProductsPage = observer(() => {
       >
         <AddProductForm />
       </Modal>
-
+      <Modal
+        isOpen={ModalStore.modalName === modals.editProduct}
+        closeModal={ModalStore.closeModal}
+      >
+        <EditProductForm
+          product={productStore.chosenProduct}
+          onClose={ModalStore.closeModal}
+        />
+      </Modal>
       <h1 className="text-3xl font-bold text-center my-6">Products</h1>
 
       <div className="flex justify-center items-center ">

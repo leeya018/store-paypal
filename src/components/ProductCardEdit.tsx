@@ -1,27 +1,28 @@
-// components/Product.tsx
-
-import { Product } from "@/api/product/interfaces";
 import { removeProductApi } from "@/api/product/remove";
 import messageStore from "@/mobx/messageStore";
 import { ModalStore } from "@/mobx/modalStore";
+import Modal from "@/ui/Modal";
+import { modals } from "@/util";
 import React from "react";
+import EditProductForm from "./EditProductForm";
+import productStore from "@/mobx/ProductStore";
+import { Product } from "@/api/product/interfaces";
 
 interface ProductProps {
   product: Product;
-
-  onProductRemove: (productId: string) => void;
 }
 
-const ProductCardEdit: React.FC<ProductProps> = ({
-  product,
-  onProductRemove,
-}) => {
+const ProductCardEdit: React.FC<ProductProps> = ({ product }) => {
   const { id, name, imageUrl, price, currency, description } = product;
 
+  console.log({ imageUrl });
   const handleRemove = async (product: Product) => {
     try {
+      if (!product.id) {
+        messageStore.setMessage("product id not defiened");
+      }
       await removeProductApi(product.id, product.imageUrl);
-      onProductRemove(product.id);
+      productStore.removeProduct(product.id);
       messageStore.setMessage("Product removed successfully!", "success");
     } catch (error) {
       messageStore.setMessage(
@@ -55,6 +56,15 @@ const ProductCardEdit: React.FC<ProductProps> = ({
           className="flex items-center bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
         >
           Delete
+        </button>
+        <button
+          onClick={() => {
+            productStore.setChosenProduct(product);
+            ModalStore.openModal(modals.editProduct);
+          }}
+          className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+        >
+          Edit
         </button>
       </div>
     </div>

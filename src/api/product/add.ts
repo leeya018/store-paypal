@@ -1,9 +1,14 @@
 // firebaseUtils.ts
 
-import { collection, addDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  DocumentSnapshot,
+  getDoc,
+} from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "@/firebaseConfig";
-import { Product } from "@/components/AddProductForm";
+import { Product } from "./interfaces";
 
 export const addProductApi = async (product: Product) => {
   try {
@@ -17,7 +22,7 @@ export const addProductApi = async (product: Product) => {
     }
 
     // Add product to Firestore
-    await addDoc(collection(db, "products"), {
+    const docRef = await addDoc(collection(db, "products"), {
       name: product.name,
       imageUrl: imageUrl,
       price: product.price,
@@ -27,6 +32,18 @@ export const addProductApi = async (product: Product) => {
     });
 
     console.log("Product added successfully!");
+    // Get the newly added document's data
+    const docSnap: DocumentSnapshot = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+      throw new Error("Failed to get the newly added document.");
+    }
+
+    const data = docSnap.data();
+    const id = docSnap.id;
+    console.log("Product added successfully!");
+
+    return { id, ...data } as Product;
   } catch (error) {
     console.error("Error adding product:", error);
     throw new Error(error.message);

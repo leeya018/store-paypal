@@ -1,7 +1,4 @@
-// components/ProductList.tsx
-
 import React, { useEffect, useState } from "react";
-// import { products } from "@/util";
 import { useCart } from "@/context/CartContext";
 import ProductCard from "./ProductCard";
 import { Product } from "@/api/product/interfaces";
@@ -9,18 +6,21 @@ import { getProductsApi } from "@/api/product/get";
 import Loading from "./Loading";
 import { removeProductApi } from "@/api/product/remove";
 import ProductCardEdit from "./ProductCardEdit";
+import Modal from "@/ui/Modal";
+import { ModalStore } from "@/mobx/modalStore";
+import { modals } from "@/util";
+import EditProductForm from "./EditProductForm";
+import productStore from "@/mobx/ProductStore";
+import { observer } from "mobx-react-lite";
 
-const ProductListEdit: React.FC = () => {
-  const { addToCart } = useCart();
-
-  const [products, setProducts] = useState<Product[]>([]);
+const ProductListEdit = observer(() => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const products = await getProductsApi();
-        setProducts(products);
+        productStore.setProducts(products);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -31,25 +31,17 @@ const ProductListEdit: React.FC = () => {
     fetchProducts();
   }, []);
 
-  const handleProductRemove = async (productId: string) => {
-    setProducts(products.filter((product) => product.id !== productId));
-  };
-
   if (loading) {
     return <Loading />;
   }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {products.map((product, index) => (
-        <ProductCardEdit
-          key={index}
-          product={product}
-          onProductRemove={handleProductRemove}
-        />
+      {productStore.products.map((product, index) => (
+        <ProductCardEdit key={index} product={product} />
       ))}
     </div>
   );
-};
+});
 
 export default ProductListEdit;
