@@ -70,4 +70,5 @@ import { Product } from "./api/product/interfaces";
 export const modals = {
   addProduct: "addProduct",
   editProduct: "editProduct",
+  login: "login",
 };

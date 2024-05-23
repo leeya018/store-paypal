@@ -1,5 +1,9 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { ModalStore } from "@/mobx/modalStore";
+import { modals } from "@/util";
 
 const Header: React.FC = () => {
   return (
@@ -25,7 +29,10 @@ const Header: React.FC = () => {
         </ul>
       </nav>
       <div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">
+        <button
+          onClick={() => ModalStore.openModal(modals.login)}
+          className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+        >
           Log in
         </button>
         <button className="bg-green-500 text-white px-4 py-2 rounded-md">
