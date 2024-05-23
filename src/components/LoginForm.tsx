@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import messageStore from "@/mobx/messageStore";
+import { ModalStore } from "@/mobx/modalStore";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +17,7 @@ const LoginForm: React.FC = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       messageStore.setMessage("Login successful!", "success");
+      ModalStore.closeModal();
     } catch (error) {
       messageStore.setMessage(
         "Error logging in: " + (error as Error).message,

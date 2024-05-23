@@ -12,10 +12,11 @@ import Message from "@/components/Message";
 import ProductListEdit from "@/components/ProductListEdit";
 import EditProductForm from "@/components/EditProductForm";
 import productStore from "@/mobx/ProductStore";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const ProductsPage = observer(() => {
   return (
-    <div>
+    <ProtectedRoute>
       <Message />
       <Modal
         isOpen={ModalStore.modalName === modals.addProduct}
@@ -38,7 +39,7 @@ const ProductsPage = observer(() => {
         <AddButton />
       </div>
       <ProductListEdit />
-    </div>
+    </ProtectedRoute>
   );
 });
 
