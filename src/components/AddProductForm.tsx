@@ -15,6 +15,7 @@ const AddProductForm: React.FC = () => {
     currency: "USD",
     description: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -38,17 +39,18 @@ const AddProductForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
       console.log(product);
       const newProd = await addProductApi(product);
       productStore.addProduct(newProd);
       messageStore.setMessage("product added!", "success");
+      ModalStore.closeModal();
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       messageStore.setMessage(error.message, "error");
     } finally {
-      ModalStore.closeModal();
     }
   };
 
@@ -113,8 +115,8 @@ const AddProductForm: React.FC = () => {
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
           required
         >
-          <option value="USD">Dollar</option>
           <option value="NIS">NIS</option>
+          <option value="USD">Dollar</option>
           <option value="EUR">Euro</option>
         </select>
       </div>
@@ -138,8 +140,9 @@ const AddProductForm: React.FC = () => {
         <button
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          disabled={isLoading}
         >
-          Add Product
+          {isLoading ? "Loading..." : "Add Product"}
         </button>
       </div>
     </form>

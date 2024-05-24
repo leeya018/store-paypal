@@ -72,3 +72,8 @@ export const modals = {
   editProduct: "editProduct",
   login: "login",
 };
+export const currencies = {
+  USD: "$",
+  NIS: "₪",
+  EUR: "€",
+};

@@ -2,7 +2,7 @@ import { removeProductApi } from "@/api/product/remove";
 import messageStore from "@/mobx/messageStore";
 import { ModalStore } from "@/mobx/modalStore";
 import Modal from "@/ui/Modal";
-import { modals } from "@/util";
+import { currencies, modals } from "@/util";
 import React from "react";
 import EditProductForm from "./EditProductForm";
 import productStore from "@/mobx/ProductStore";
@@ -46,7 +46,8 @@ const ProductCardEdit: React.FC<ProductProps> = ({ product }) => {
       </div>
       <div className="px-6 pt-4 pb-2">
         <span className="text-gray-900 font-bold">
-          {currency}
+          {currencies[currency]}
+
           {price}
         </span>
       </div>

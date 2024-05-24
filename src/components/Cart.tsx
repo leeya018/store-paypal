@@ -2,9 +2,11 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
 import { useRouter } from "next/navigation";
+import { FaTrashAlt } from "react-icons/fa";
 
 const Cart: React.FC = () => {
-  const { cart, increaseQuantity, decreaseQuantity } = useCart();
+  const { cart, increaseQuantity, decreaseQuantity, removeFromCart } =
+    useCart();
   const router = useRouter();
 
   const getTotal = () => {
@@ -13,18 +15,11 @@ const Cart: React.FC = () => {
       .reduce((acc, value) => acc + value, 0);
   };
 
-  const handleCheckout = () => {
-    router.push("checkout ");
-  };
-  // const handleCheckout = () => {
-  //   router.push(
-  //     "https://meshulam.co.il/purchase?b=2f93c0fc2d45a702e20ed63e2c5e3814"
-  //   );
-  // };
+  console.log({ cart });
 
   return (
     <div className="p-6 bg-white shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Shopping Cart</h2>
+      <h2 className="text-2xl font-bold mb-4">Your Items</h2>
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
@@ -57,18 +52,21 @@ const Cart: React.FC = () => {
                 >
                   +
                 </button>
+                <FaTrashAlt
+                  size={25}
+                  className="ml-4 text-red-500 cursor-pointer"
+                  onClick={() => removeFromCart(item.product.id)}
+                />
               </div>
             </li>
           ))}
         </ul>
       )}
-      <div>total: ${getTotal()}</div>
-      <button
-        onClick={handleCheckout}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
-      >
-        Checkout
-      </button>
+      {cart.length !== 0 && (
+        <div>
+          <div>total: ${getTotal()}</div>
+        </div>
+      )}
     </div>
   );
 };

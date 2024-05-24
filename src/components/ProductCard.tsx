@@ -4,6 +4,7 @@ import { Product } from "@/api/product/interfaces";
 import { removeProductApi } from "@/api/product/remove";
 import messageStore from "@/mobx/messageStore";
 import { ModalStore } from "@/mobx/modalStore";
+import { currencies } from "@/util";
 import React from "react";
 
 interface ProductProps {
@@ -19,47 +20,27 @@ const ProductCard: React.FC<ProductProps> = ({
 }) => {
   const { id, name, imageUrl, price, currency, description } = product;
 
-  const handleRemove = async (product: Product) => {
-    try {
-      await removeProductApi(product.id, product.imageUrl);
-      onProductRemove(product.id);
-      messageStore.setMessage("Product removed successfully!", "success");
-    } catch (error) {
-      messageStore.setMessage(
-        "Error removing product: " + error.message,
-        "error"
-      );
-    } finally {
-      ModalStore.closeModal();
-    }
-  };
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg p-4">
-      <button
-        onClick={() => handleRemove(product)}
-        className="flex items-center bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-      >
-        Delete
-      </button>
+    <div className="max-w-sm rounded overflow-hidden shadow-lg p-2">
       <img
-        className="w-32 h-32 object-cover mb-4 mx-auto"
+        className="w-24 h-24 object-cover mb-2 mx-auto"
         src={imageUrl}
         alt={name}
       />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{name}</div>
-        <p className="text-gray-700 text-base">{description}</p>
+      <div className="px-4 py-2">
+        <div className="font-bold text-lg mb-1">{name}</div>
+        <p className="text-gray-700 text-sm">{description}</p>
       </div>
-      <div className="px-6 pt-4 pb-2">
+      <div className="px-4 pt-2 pb-1">
         <span className="text-gray-900 font-bold">
-          {currency}
+          {currencies[currency]}
           {price}
         </span>
-      </div>{" "}
+      </div>
       <div className="flex justify-center">
         <button
           onClick={onAddToCart}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md "
+          className="bg-blue-500 text-white px-3 py-1 rounded-md"
         >
           Add to Cart
         </button>
