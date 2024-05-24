@@ -74,6 +74,6 @@ export const modals = {
 };
 export const currencies = {
   USD: "$",
-  NIS: "₪",
+  ILS: "₪",
   EUR: "€",
 };

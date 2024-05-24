@@ -12,7 +12,7 @@ const AddProductForm: React.FC = () => {
     name: "",
     image: null,
     price: 0,
-    currency: "USD",
+    currency: "ILS",
     description: "",
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -115,9 +115,9 @@ const AddProductForm: React.FC = () => {
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
           required
         >
-          <option value="NIS">NIS</option>
-          <option value="USD">Dollar</option>
-          <option value="EUR">Euro</option>
+          <option value="ILS">ILS</option>
+          {/* <option value="USD">Dollar</option>
+          <option value="EUR">Euro</option> */}
         </select>
       </div>
       <div className="mb-4">

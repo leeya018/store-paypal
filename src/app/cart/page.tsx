@@ -20,7 +20,7 @@ const CheckoutPage = () => {
     const items = cart.map((item) => ({
       name: item.product.name,
       unit_amount: {
-        currency_code: "USD",
+        currency_code: "ILS",
         value: item.product.price.toFixed(2),
       },
       quantity: item.quantity.toString(),
@@ -35,11 +35,11 @@ const CheckoutPage = () => {
       purchase_units: [
         {
           amount: {
-            currency_code: "USD",
+            currency_code: "ILS",
             value: itemTotal,
             breakdown: {
               item_total: {
-                currency_code: "USD",
+                currency_code: "ILS",
                 value: itemTotal,
               },
             },

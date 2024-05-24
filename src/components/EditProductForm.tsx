@@ -113,9 +113,9 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
           className="w-full px-3 py-2 border rounded-md"
           required
         >
-          <option value="USD">Dollar</option>
-          <option value="NIS">NIS</option>
-          <option value="EUR">Euro</option>
+          <option value="ILS">ILS</option>
+          {/* <option value="USD">Dollar</option> */}
+          {/* <option value="EUR">Euro</option> */}
         </select>
       </div>
 
