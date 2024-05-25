@@ -21,7 +21,11 @@ const Header = observer(() => {
       console.log("User signed out successfully");
     } catch (error) {
       console.error("Error signing out: ", error);
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("Error signing out:", error);
+      }
     }
   };
 

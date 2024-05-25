@@ -13,7 +13,10 @@ export const removeProductApi = async (productId: string, imageUrl: string) => {
 
     console.log("Product removed successfully!");
   } catch (error) {
-    console.error("Error removing product:", error);
-    throw new Error(error.message);
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error("Error removing produc:", error);
+    }
   }
 };

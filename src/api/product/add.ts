@@ -45,7 +45,10 @@ export const addProductApi = async (product: Product) => {
 
     return { id, ...data } as Product;
   } catch (error) {
-    console.error("Error adding product:", error);
-    throw new Error(error.message);
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error("Error adding product:", error);
+    }
   }
 };

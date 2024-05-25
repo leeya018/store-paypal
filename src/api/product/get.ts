@@ -2,7 +2,7 @@ import { db, storage } from "@/firebaseConfig";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { Product } from "./interfaces";
 
-export const getProductsApi = async (): Promise<Product[]> => {
+export const getProductsApi = async (): Promise<Product[] | undefined> => {
   try {
     const productsCollection = collection(db, "products");
     const productsQuery = query(
@@ -21,7 +21,10 @@ export const getProductsApi = async (): Promise<Product[]> => {
 
     return products;
   } catch (error) {
-    console.error("Error fetching products:", error);
-    throw new Error(error.message);
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error("Error fetching products:", error);
+    }
   }
 };

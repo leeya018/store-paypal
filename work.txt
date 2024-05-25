@@ -1,6 +1,4 @@
-cretae a user for carl 
-logo 
-image back 
 all the products will be by the user . ( mabye )
 creta account bussiness to carla in payal  ( make a test as well )
-instruction about the money , all the time leave it as ILS  
+
+create the store prod app . ( build .)

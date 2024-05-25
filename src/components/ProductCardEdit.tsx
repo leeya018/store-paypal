@@ -7,6 +7,7 @@ import React from "react";
 import EditProductForm from "./EditProductForm";
 import productStore from "@/mobx/ProductStore";
 import { Product } from "@/api/product/interfaces";
+import Image from "next/image";
 
 interface ProductProps {
   product: Product;
@@ -20,24 +21,35 @@ const ProductCardEdit: React.FC<ProductProps> = ({ product }) => {
     try {
       if (!product.id) {
         messageStore.setMessage("product id not defiened");
+        return;
+      } else if (!product.imageUrl) {
+        messageStore.setMessage("imageUrl not defiened");
+        return;
       }
       await removeProductApi(product.id, product.imageUrl);
       productStore.removeProduct(product.id);
       messageStore.setMessage("Product removed successfully!", "success");
     } catch (error) {
-      messageStore.setMessage(
-        "Error removing product: " + error.message,
-        "error"
-      );
+      if (error instanceof Error) {
+        console.error(error.message);
+        messageStore.setMessage(
+          "Error removing product: " + error.message,
+          "error"
+        );
+      } else {
+        console.error("Error adding product:", error);
+      }
     } finally {
       ModalStore.closeModal();
     }
   };
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg p-4">
-      <img
+      <Image
+        width={128}
+        height={128}
         className="w-32 h-32 object-cover mb-4 mx-auto"
-        src={imageUrl}
+        src={imageUrl || ""}
         alt={name}
       />
       <div className="px-6 py-4">

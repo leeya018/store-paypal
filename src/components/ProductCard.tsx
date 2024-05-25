@@ -5,6 +5,7 @@ import { removeProductApi } from "@/api/product/remove";
 import messageStore from "@/mobx/messageStore";
 import { ModalStore } from "@/mobx/modalStore";
 import { currencies } from "@/util";
+import Image from "next/image";
 import React from "react";
 
 interface ProductProps {
@@ -22,9 +23,11 @@ const ProductCard: React.FC<ProductProps> = ({
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg p-2">
-      <img
+      <Image
+        width={96}
+        height={96}
         className="w-24 h-24 object-cover mb-2 mx-auto"
-        src={imageUrl}
+        src={imageUrl || ""}
         alt={name}
       />
       <div className="px-4 py-2">

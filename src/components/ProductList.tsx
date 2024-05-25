@@ -19,7 +19,7 @@ const ProductList: React.FC = () => {
     const fetchProducts = async () => {
       try {
         const products = await getProductsApi();
-        setProducts(products);
+        setProducts(products || []);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {

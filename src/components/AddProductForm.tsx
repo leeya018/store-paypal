@@ -41,15 +41,26 @@ const AddProductForm: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
+      if (product.price === 0) {
+        messageStore.setMessage("price cannot be zero", "error");
+        return;
+      }
       console.log(product);
       const newProd = await addProductApi(product);
+      if (!newProd) throw new Error("newProd  is null");
+
       productStore.addProduct(newProd);
       messageStore.setMessage("product added!", "success");
       ModalStore.closeModal();
       setIsLoading(false);
     } catch (error) {
       console.log(error);
-      messageStore.setMessage(error.message, "error");
+      if (error instanceof Error) {
+        messageStore.setMessage(error.message, "error");
+      } else {
+        console.error("Error fetching products:", error);
+        messageStore.setMessage("Error fetching products");
+      }
     } finally {
     }
   };

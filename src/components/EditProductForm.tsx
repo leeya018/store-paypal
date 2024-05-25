@@ -45,14 +45,19 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
     e.preventDefault();
     try {
       const updatedProd = await updateProductApi(updatedProduct);
+      if (!updatedProd) throw new Error("product updated is null");
       productStore.updateProduct(updatedProd);
       messageStore.setMessage("Product updated successfully!", "success");
       onClose();
     } catch (error) {
-      messageStore.setMessage(
-        "Error updating product: " + error.message,
-        "error"
-      );
+      if (error instanceof Error) {
+        messageStore.setMessage(
+          "Error updating product: " + error.message,
+          "error"
+        );
+      } else {
+        messageStore.setMessage("An unknown error occurred", "error");
+      }
     }
   };
 

@@ -20,7 +20,7 @@ const ProductListEdit = observer(() => {
     const fetchProducts = async () => {
       try {
         const products = await getProductsApi();
-        productStore.setProducts(products);
+        productStore.setProducts(products || []);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {

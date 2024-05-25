@@ -3,6 +3,7 @@ import React from "react";
 import { useCart } from "../context/CartContext";
 import { useRouter } from "next/navigation";
 import { FaTrashAlt } from "react-icons/fa";
+import Image from "next/image";
 
 const Cart: React.FC = () => {
   const { cart, increaseQuantity, decreaseQuantity, removeFromCart } =
@@ -29,8 +30,10 @@ const Cart: React.FC = () => {
               key={item.product.id}
               className="flex justify-between items-center mb-4"
             >
-              <img
-                src={item.product.imageUrl}
+              <Image
+                width={64}
+                height={64}
+                src={item.product.imageUrl || ""}
                 alt={item.product.name}
                 className="w-16 h-16 object-cover mr-4"
               />
@@ -40,14 +43,20 @@ const Cart: React.FC = () => {
               </div>
               <div className="flex items-center">
                 <button
-                  onClick={() => decreaseQuantity(item.product.id)}
+                  onClick={() => {
+                    if (!item.product.id) return;
+                    decreaseQuantity(item.product.id);
+                  }}
                   className="bg-gray-200 text-gray-700 px-2 py-1 rounded-md"
                 >
                   -
                 </button>
                 <span className="mx-2">{item.quantity}</span>
                 <button
-                  onClick={() => increaseQuantity(item.product.id)}
+                  onClick={() => {
+                    if (!item.product.id) return;
+                    increaseQuantity(item.product.id);
+                  }}
                   className="bg-gray-200 text-gray-700 px-2 py-1 rounded-md"
                 >
                   +
@@ -55,7 +64,10 @@ const Cart: React.FC = () => {
                 <FaTrashAlt
                   size={25}
                   className="ml-4 text-red-500 cursor-pointer"
-                  onClick={() => removeFromCart(item.product.id)}
+                  onClick={() => {
+                    if (!item.product.id) return;
+                    removeFromCart(item.product.id);
+                  }}
                 />
               </div>
             </li>

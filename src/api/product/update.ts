@@ -36,7 +36,10 @@ export const updateProductApi = async (product: Product) => {
     console.log({ id, ...data }, "tdata");
     return { id, ...data } as Product;
   } catch (error) {
-    console.error("Error updating product:", error);
-    throw new Error(error.message);
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error("Error updating product:", error);
+    }
   }
 };

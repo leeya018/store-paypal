@@ -28,10 +28,12 @@ const ProductsPage = observer(() => {
         isOpen={ModalStore.modalName === modals.editProduct}
         closeModal={ModalStore.closeModal}
       >
-        <EditProductForm
-          product={productStore.chosenProduct}
-          onClose={ModalStore.closeModal}
-        />
+        {productStore.chosenProduct && (
+          <EditProductForm
+            product={productStore.chosenProduct}
+            onClose={ModalStore.closeModal}
+          />
+        )}
       </Modal>
       <h1 className="text-3xl font-bold text-center my-6">Products</h1>
 

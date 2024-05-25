@@ -72,7 +72,8 @@ export const modals = {
   editProduct: "editProduct",
   login: "login",
 };
-export const currencies = {
+
+export const currencies: Record<string, string> = {
   USD: "$",
   ILS: "₪",
   EUR: "€",
