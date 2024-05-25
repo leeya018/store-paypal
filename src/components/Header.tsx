@@ -28,7 +28,13 @@ const Header = observer(() => {
   return (
     <header className="flex justify-between items-center p-6 bg-white shadow-md">
       <div className="logo flex items-center justify-center w-full md:w-auto">
-        <Image alt="logo" width={70} height={70} src={"/images/logo.png"} />
+        <Image
+          alt="logo"
+          width={70}
+          height={70}
+          src={"/images/logo.png"}
+          className="bg-center object-cover rounded-full w-[70px] h-[70px]"
+        />
       </div>
       <li className="relative">
         <Link href="/cart">
