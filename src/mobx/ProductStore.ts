@@ -1,7 +1,7 @@
 // stores/ProductStore.ts
 
 import { Product } from "@/api/product/interfaces";
-import { makeAutoObservable } from "mobx";
+import { autorun, makeAutoObservable, toJS } from "mobx";
 
 class ProductStore {
   chosenProduct: Product | null = null;
@@ -37,5 +37,8 @@ class ProductStore {
   }
 }
 
+autorun(() => {
+  console.log(toJS(productStore.products));
+});
 const productStore = new ProductStore();
 export default productStore;

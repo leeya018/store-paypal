@@ -8,7 +8,7 @@ const AddButton: React.FC = () => {
       onClick={() => ModalStore.openModal(modals.addProduct)}
       className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-2 rounded-full shadow-lg flex items-center"
     >
-      <span className="mr-2">Add Product</span>
+      <span className="mr-2">הוסף מוצר</span>
       <svg
         className="w-4 h-4"
         fill="none"

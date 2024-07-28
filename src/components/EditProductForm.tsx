@@ -5,6 +5,9 @@ import messageStore from "@/mobx/messageStore";
 import { updateProductApi } from "@/api/product/update";
 import { Product } from "@/api/product/interfaces";
 import productStore from "@/mobx/ProductStore";
+import Image from "next/image";
+import { observer } from "mobx-react-lite";
+import { toJS } from "mobx";
 
 interface EditProductFormProps {
   product: Product;
@@ -19,6 +22,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
 
   useEffect(() => {
     setUpdatedProduct(product);
+    console.log({ product: toJS(product) });
   }, [product]);
 
   const handleChange = (
@@ -89,6 +93,14 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
           onChange={handleFileChange}
           className="w-full px-3 py-2 border rounded-md"
         />
+        <Image
+          alt="product image1"
+          // layout="fill"
+          width={100}
+          height={100}
+          className=" bg-center object-cover "
+          src={product?.imageUrl || ""}
+        />
       </div>
 
       <div>
@@ -119,8 +131,6 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
           required
         >
           <option value="ILS">ILS</option>
-          {/* <option value="USD">Dollar</option> */}
-          {/* <option value="EUR">Euro</option> */}
         </select>
       </div>
 
@@ -150,4 +160,4 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
   );
 };
 
-export default EditProductForm;
+export default observer(EditProductForm);

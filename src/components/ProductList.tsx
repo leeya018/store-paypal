@@ -8,9 +8,12 @@ import { Product } from "@/api/product/interfaces";
 import { getProductsApi } from "@/api/product/get";
 import Loading from "./Loading";
 import { removeProductApi } from "@/api/product/remove";
+import { observer } from "mobx-react-lite";
+import productStore from "@/mobx/ProductStore";
+import { productsItems } from "@/util";
 
 const ProductList: React.FC = () => {
-  const { addToCart } = useCart();
+  // const { addToCart } = useCart();
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +22,8 @@ const ProductList: React.FC = () => {
     const fetchProducts = async () => {
       try {
         const products = await getProductsApi();
-        setProducts(products || []);
+        // setProducts(products || []);
+        productStore.setProducts(products || []);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -39,12 +43,12 @@ const ProductList: React.FC = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {products.map((product, index) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mx-10">
+      {/* {productStore.products.map((product, index) => ( */}
+      {productsItems.map((product, index) => (
         <ProductCard
           key={index}
           product={product}
-          onAddToCart={() => addToCart(product)}
           onProductRemove={handleProductRemove}
         />
       ))}
@@ -52,4 +56,4 @@ const ProductList: React.FC = () => {
   );
 };
 
-export default ProductList;
+export default observer(ProductList);

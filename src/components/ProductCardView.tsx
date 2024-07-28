@@ -2,6 +2,7 @@
 
 import { Product } from "@/api/product/interfaces";
 import { removeProductApi } from "@/api/product/remove";
+import authStore from "@/mobx/authStore";
 import messageStore from "@/mobx/messageStore";
 import { ModalStore } from "@/mobx/modalStore";
 import productStore from "@/mobx/ProductStore";
@@ -9,20 +10,44 @@ import { currencies, modals } from "@/util";
 import { observer } from "mobx-react-lite";
 import Image from "next/image";
 import React from "react";
+import AddButton from "./AddButton";
 
-interface ProductCardViewProps {}
-
-const ProductCardView: React.FC<ProductCardViewProps> = ({}) => {
+const ProductCardView = ({}) => {
   const { id, name, imageUrl, price, currency, description } =
     productStore.chosenProduct;
 
-  return (
-    <div
-      className=" mx-2  my-5 rounded-xl  bg-card-gradient cursor-pointer "
+  const handleRemove = async () => {
+    try {
+      const product = productStore.chosenProduct;
+      if (!product?.id) {
+        messageStore.setMessage("product id not defiened");
+        return;
+      } else if (!product.imageUrl) {
+        messageStore.setMessage("imageUrl not defiened");
+        return;
+      }
+      await removeProductApi(product.id, product.imageUrl);
+      productStore.removeProduct(product.id);
+      messageStore.setMessage("Product removed successfully!", "success");
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+        messageStore.setMessage(
+          "Error removing product: " + error.message,
+          "error"
+        );
+      } else {
+        console.error("Error adding product:", error);
+      }
+    } finally {
+      ModalStore.closeModal();
+    }
+  };
 
-      // onClick={handleClick}
-    >
-      <div className=" relative w-full h-64">
+  console.log({ imageUrl });
+  return (
+    <div className=" mx-2  my-5 rounded-xl  bg-card-gradient cursor-pointer ">
+      <div className=" relative w-full h-[60vh]">
         <Image
           alt={name + "תמונה של"}
           src={imageUrl ? imageUrl : "/"}
@@ -41,64 +66,26 @@ const ProductCardView: React.FC<ProductCardViewProps> = ({}) => {
           {description}
         </h3>
       </div>
+      {authStore.isLoggedIn && (
+        <div className="w-full flex justify-between items-center">
+          <button
+            onClick={handleRemove}
+            className="flex items-center bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+          >
+            מחק
+          </button>
+          <button
+            onClick={() => {
+              ModalStore.openModal(modals.editProduct);
+            }}
+            className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          >
+            ערוף
+          </button>
+        </div>
+      )}
     </div>
   );
 };
 
 export default observer(ProductCardView);
-
-// // components/Product.tsx
-
-// import { Product } from "@/api/product/interfaces";
-// import { removeProductApi } from "@/api/product/remove";
-// import messageStore from "@/mobx/messageStore";
-// import { ModalStore } from "@/mobx/modalStore";
-// import { currencies } from "@/util";
-// import Image from "next/image";
-// import React from "react";
-
-// interface ProductProps {
-//   product: Product;
-//   onAddToCart: () => void;
-//   onProductRemove: (productId: string) => void;
-// }
-
-// const ProductCardView: React.FC<ProductProps> = ({
-//   product,
-//   onAddToCart,
-//   onProductRemove,
-// }) => {
-//   const { id, name, imageUrl, price, currency, description } = product;
-
-//   return (
-//     <div className="max-w-sm rounded overflow-hidden bg-white shadow-lg p-2">
-//       <Image
-//         width={96}
-//         height={96}
-//         className="w-24 h-24 object-cover mb-2 mx-auto"
-//         src={imageUrl || ""}
-//         alt={name}
-//       />
-//       <div className="px-4 py-2">
-//         <div className="font-bold text-lg mb-1">{name}</div>
-//         <p className="text-gray-700 text-sm">{description}</p>
-//       </div>
-//       <div className="px-4 pt-2 pb-1">
-//         <span className="text-gray-900 font-bold">
-//           {currencies[currency]}
-//           {price}
-//         </span>
-//       </div>
-//       <div className="flex justify-center">
-//         <button
-//           onClick={onAddToCart}
-//           className="bg-blue-500 text-white px-3 py-1 rounded-md"
-//         >
-//           Add to Cart
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ProductCardView;

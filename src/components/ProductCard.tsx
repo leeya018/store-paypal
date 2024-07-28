@@ -11,13 +11,12 @@ import React from "react";
 
 interface ProductProps {
   product: Product;
-  onAddToCart: () => void;
   onProductRemove: (productId: string) => void;
 }
 
 const ProductCard: React.FC<ProductProps> = ({
   product,
-  onAddToCart,
+
   onProductRemove,
 }) => {
   const { id, name, imageUrl, price, currency, description } = product;

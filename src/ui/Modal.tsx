@@ -1,6 +1,7 @@
 import { Fragment, ReactNode } from "react";
 
 import { Dialog, Transition } from "@headlessui/react";
+import { observer } from "mobx-react-lite";
 
 type ModalProps = {
   isOpen: boolean;
@@ -35,12 +36,15 @@ function Modal({ isOpen, closeModal, children }: ModalProps) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-[50vw] rounded-md max-w-full transform overflow-hidden  bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel
+                className="w-[50vw] rounded-md 
+              max-w-full transform overflow-hidden  bg-white p-6 text-left align-middle shadow-xl transition-all"
+              >
                 <button
                   onClick={closeModal}
                   className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-3xl"
                 >
-                  ×
+                  x
                 </button>
                 {children}
               </Dialog.Panel>
@@ -52,4 +56,4 @@ function Modal({ isOpen, closeModal, children }: ModalProps) {
   );
 }
 
-export default Modal;
+export default observer(Modal);

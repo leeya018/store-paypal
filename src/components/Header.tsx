@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { ModalStore } from "@/mobx/modalStore";
 import { modals } from "@/util";
@@ -14,6 +14,8 @@ import { useCart } from "@/context/CartContext";
 
 const Header = observer(() => {
   const { cart } = useCart();
+
+  const [activeTab, setActiveTab] = useState("home");
 
   const logout = async () => {
     try {
@@ -30,7 +32,7 @@ const Header = observer(() => {
   };
 
   return (
-    <header className="flex justify-between items-center p-6 bg-white  shadow-md">
+    <header className="flex justify-between items-center px-6 py-2 bg-white  shadow-md">
       <div className="logo flex items-center justify-center w-full md:w-auto">
         <Image
           alt="logo"
@@ -40,49 +42,53 @@ const Header = observer(() => {
           className="bg-center object-cover rounded-full w-[70px] h-[70px]"
         />
       </div>
-      <li className="relative">
+      <li
+        onClick={() => setActiveTab("cart")}
+        className={`relative underline ${
+          activeTab === "home" && "underline"
+        } text-gray-700 hover:underline`}
+      >
         <Link href="/cart">
-          <FaCartShopping
-            size={30}
-            className="text-gray-700 hover:text-gray-900"
-          />
-          {cart.length > 0 && (
-            <span className="absolute top-0 right-0  w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
-              {cart.length}
-            </span>
-          )}
+          <span className="underline text-black">
+            <FaCartShopping
+              size={30}
+              className="text-gray-700 hover:text-gray-900"
+            />
+            {cart.length > 0 && (
+              <span className="absolute top-0 right-0  w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                {cart.length}
+              </span>
+            )}
+          </span>
         </Link>
       </li>
 
       <nav>
         <ul className="flex space-x-6">
-          <li>
+          <li onClick={() => setActiveTab("home")}>
             <Link href="/">
-              <span className="text-gray-700 hover:underline">Home</span>
+              <span
+                className={`${
+                  activeTab === "home" && "underline"
+                } text-gray-700 hover:underline`}
+              >
+                בית
+              </span>
             </Link>
           </li>
-          {authStore.isLoggedIn && (
-            <li>
-              <Link href="/products_admin">
-                <span className="  text-red-500 hover:underline">
-                  products admin
-                </span>
-              </Link>
-            </li>
-          )}
         </ul>
       </nav>
       <div>
         {authStore.isLoggedIn ? (
           <div>
             <span className="mr-2">
-              Hello, {authStore.user?.displayName || authStore.user?.email}
+              שלום, {authStore.user?.displayName || authStore.user?.email}
             </span>
             <button
               onClick={logout}
               className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
             >
-              Log out
+              יציאה
             </button>
           </div>
         ) : (
@@ -90,7 +96,7 @@ const Header = observer(() => {
             onClick={() => ModalStore.openModal(modals.login)}
             className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
           >
-            Log in
+            כניסה
           </button>
         )}
       </div>

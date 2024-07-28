@@ -5,6 +5,7 @@ import { Product } from "@/api/product/interfaces";
 import productStore from "@/mobx/ProductStore";
 import messageStore from "@/mobx/messageStore";
 import { ModalStore } from "@/mobx/modalStore";
+import { toJS } from "mobx";
 import React, { useState } from "react";
 
 const AddProductForm: React.FC = () => {
@@ -49,10 +50,10 @@ const AddProductForm: React.FC = () => {
       const newProd = await addProductApi(product);
       if (!newProd) throw new Error("newProd  is null");
 
+      console.log(toJS(productStore.products));
       productStore.addProduct(newProd);
       messageStore.setMessage("product added!", "success");
       ModalStore.closeModal();
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
       if (error instanceof Error) {
@@ -62,6 +63,7 @@ const AddProductForm: React.FC = () => {
         messageStore.setMessage("Error fetching products");
       }
     } finally {
+      setIsLoading(false);
     }
   };
 
