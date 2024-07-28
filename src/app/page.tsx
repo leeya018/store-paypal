@@ -18,7 +18,26 @@ import AddButton from "@/components/AddButton";
 import AddProductForm from "@/components/AddProductForm";
 import EditProductForm from "@/components/EditProductForm";
 import authStore from "@/mobx/authStore";
+import { getProductsApi } from "@/api/product/get";
+import { useEffect, useState } from "react";
 const HomePage = ({}) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const products = await getProductsApi();
+        productStore.setProducts(products || []);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className="max-h-screen overflow-y-auto">
       <Modal
@@ -34,7 +53,7 @@ const HomePage = ({}) => {
         }
         closeModal={ModalStore.closeModal}
       >
-        <ProductCardView />
+        <ProductCardView pageName={"home"} />
       </Modal>
       <Modal
         isOpen={ModalStore.modalName === modals.addProduct}
@@ -62,7 +81,11 @@ const HomePage = ({}) => {
       )}
 
       <MainSection />
-      <ProductList />
+      <ProductList
+        isLoading={isLoading}
+        products={productStore.products}
+        pageName="home"
+      />
       <Footer />
     </div>
   );

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useCart } from "@/context/CartContext";
 import ProductCard from "./ProductCard";
 import { Product } from "@/api/product/interfaces";
 import { getProductsApi } from "@/api/product/get";

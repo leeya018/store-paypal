@@ -11,10 +11,19 @@ import { observer } from "mobx-react-lite";
 import Image from "next/image";
 import React from "react";
 import AddButton from "./AddButton";
+import cartStore from "@/mobx/cartStore";
 
-const ProductCardView = ({}) => {
+type ProductCardView = {
+  pageName: string;
+};
+
+const ProductCardView: React.FC<ProductCardView> = ({ pageName }) => {
+  if (!productStore.chosenProduct) return <div></div>;
+
   const { id, name, imageUrl, price, currency, description } =
     productStore.chosenProduct;
+
+  const isExists = cartStore.isItemExists(productStore.chosenProduct);
 
   const handleRemove = async () => {
     try {
@@ -44,6 +53,13 @@ const ProductCardView = ({}) => {
     }
   };
 
+  const addToCart = () => {
+    if (!productStore.chosenProduct) return;
+    if (cartStore.isItemExists(productStore.chosenProduct)) {
+      return;
+    }
+    cartStore.addItem(productStore.chosenProduct);
+  };
   console.log({ imageUrl });
   return (
     <div className=" mx-2  my-5 rounded-xl  bg-card-gradient cursor-pointer ">
@@ -80,9 +96,21 @@ const ProductCardView = ({}) => {
             }}
             className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
           >
-            ערוף
+            ערוך
           </button>
         </div>
+      )}
+
+      {!authStore.isLoggedIn && (
+        <button
+          onClick={addToCart}
+          disabled={isExists}
+          className={`${
+            isExists ? "bg-gray-500" : "bg-blue-500 hover:bg-blue-600"
+          } flex items-center  text-white px-4 py-2 rounded-md `}
+        >
+          {isExists ? "הוסף לעגלה" : "הכנס לעגלה"}
+        </button>
       )}
     </div>
   );

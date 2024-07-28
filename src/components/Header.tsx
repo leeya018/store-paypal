@@ -10,11 +10,9 @@ import { auth } from "@/firebaseConfig";
 import { observer } from "mobx-react-lite";
 import Image from "next/image";
 import { FaCartShopping } from "react-icons/fa6";
-import { useCart } from "@/context/CartContext";
+import cartStore from "@/mobx/cartStore";
 
 const Header = observer(() => {
-  const { cart } = useCart();
-
   const [activeTab, setActiveTab] = useState("home");
 
   const logout = async () => {
@@ -54,9 +52,9 @@ const Header = observer(() => {
               size={30}
               className="text-gray-700 hover:text-gray-900"
             />
-            {cart.length > 0 && (
+            {cartStore.items?.length > 0 && (
               <span className="absolute top-0 right-0  w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
-                {cart.length}
+                {cartStore.items?.length}
               </span>
             )}
           </span>
