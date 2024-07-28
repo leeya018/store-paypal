@@ -44,7 +44,7 @@ const ProductCardEdit: React.FC<ProductProps> = ({ product }) => {
     }
   };
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg p-4">
+    <div className="max-w-sm rounded overflow-hidden shadow-lg p-4 bg-white">
       <Image
         width={128}
         height={128}

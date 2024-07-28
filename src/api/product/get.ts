@@ -23,6 +23,8 @@ export const getProductsApi = async (): Promise<Product[] | undefined> => {
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message);
+
+      throw new Error(error.message);
     } else {
       console.error("Error fetching products:", error);
     }

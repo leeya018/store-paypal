@@ -18,9 +18,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="he" className="relative rtl">
       <CartProvider>
-        <body className={inter.className}>
+        {/* <body className={inter.className} > */}
+        <body className="background-container">
           <Header />
           <main className=" min-h-screen">{children}</main>
           <Footer />

@@ -12,15 +12,22 @@ import { modals } from "@/util";
 import Message from "@/components/Message";
 import { observer } from "mobx-react-lite";
 import ProductList from "@/components/ProductList";
+import ProductCardView from "@/components/ProductCardView";
 
 const HomePage = observer(() => {
   return (
-    <div>
+    <div className="max-h-screen overflow-y-auto">
       <Modal
         isOpen={ModalStore.modalName === modals.login}
         closeModal={ModalStore.closeModal}
       >
         <LoginForm />
+      </Modal>
+      <Modal
+        isOpen={ModalStore.modalName === modals.productView}
+        closeModal={ModalStore.closeModal}
+      >
+        <ProductCardView />
       </Modal>
       <Message />
 

@@ -30,7 +30,7 @@ const Header = observer(() => {
   };
 
   return (
-    <header className="flex justify-between items-center p-6 bg-white shadow-md">
+    <header className="flex justify-between items-center p-6 bg-white  shadow-md">
       <div className="logo flex items-center justify-center w-full md:w-auto">
         <Image
           alt="logo"
@@ -47,7 +47,7 @@ const Header = observer(() => {
             className="text-gray-700 hover:text-gray-900"
           />
           {cart.length > 0 && (
-            <span className="absolute top-0 right-0 inline-block w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+            <span className="absolute top-0 right-0  w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
               {cart.length}
             </span>
           )}

@@ -6,30 +6,21 @@ import messageStore from "@/mobx/messageStore";
 import { ModalStore } from "@/mobx/modalStore";
 import productStore from "@/mobx/ProductStore";
 import { currencies, modals } from "@/util";
+import { observer } from "mobx-react-lite";
 import Image from "next/image";
 import React from "react";
 
-interface ProductProps {
-  product: Product;
-  onAddToCart: () => void;
-  onProductRemove: (productId: string) => void;
-}
+interface ProductCardViewProps {}
 
-const ProductCard: React.FC<ProductProps> = ({
-  product,
-  onAddToCart,
-  onProductRemove,
-}) => {
-  const { id, name, imageUrl, price, currency, description } = product;
+const ProductCardView: React.FC<ProductCardViewProps> = ({}) => {
+  const { id, name, imageUrl, price, currency, description } =
+    productStore.chosenProduct;
 
-  const handleClick = () => {
-    productStore.setChosenProduct(product);
-    ModalStore.openModal(modals.productView);
-  };
   return (
     <div
       className=" mx-2  my-5 rounded-xl  bg-card-gradient cursor-pointer "
-      onClick={handleClick}
+
+      // onClick={handleClick}
     >
       <div className=" relative w-full h-64">
         <Image
@@ -44,14 +35,17 @@ const ProductCard: React.FC<ProductProps> = ({
           {name}
         </h3>
         <h3 className="text-lg font-semibold mb-2 whitespace-normal  ">
-          מחיר : {price}
+          מחיר : {price} + " " + {currency}
+        </h3>
+        <h3 className="text-lg font-semibold mb-2 whitespace-normal  ">
+          {description}
         </h3>
       </div>
     </div>
   );
 };
 
-export default ProductCard;
+export default observer(ProductCardView);
 
 // // components/Product.tsx
 
@@ -69,7 +63,7 @@ export default ProductCard;
 //   onProductRemove: (productId: string) => void;
 // }
 
-// const ProductCard: React.FC<ProductProps> = ({
+// const ProductCardView: React.FC<ProductProps> = ({
 //   product,
 //   onAddToCart,
 //   onProductRemove,
@@ -107,4 +101,4 @@ export default ProductCard;
 //   );
 // };
 
-// export default ProductCard;
+// export default ProductCardView;
